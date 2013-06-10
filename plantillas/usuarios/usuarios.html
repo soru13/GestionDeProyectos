@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% comment %}Aqui van los comentarios{% endcomment %}
+{% block titulo %}Usuarios{% endblock titulo %}
+{% block head %}
+{% endblock head %}
+{% block encabezado %}
+               <div class="navbar navbar-fixed-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                      </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-refresh"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div><br><br><br>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">Usuarios</li>
+  <li ><a href="{% url statistics.views.statistics %}"><i class="icon-signal"></i> Estadisticas</a></li>
+  <li ><a href="{% url Apps.views.Appsprivada %}" ><i class="icon-star"></i> Aplicaciones</a></li>
+  <li ><a href="{% url ControlActividades.views.ControlActividades %}" ><i class="icon-list-alt"></i> Control Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" ><i class="icon-print"></i> Reporteria</a></li>
+  <li ><a href="{% url Chat.views.Chat %}" ><i class="icon-envelope"></i> Mensajeria</a></li>
+  {% if login.is_staff %}<li class="active"><a href="{% url Usuarios.views.usuarios %}" ><i class="icon-user"></i> Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li><a href="{% url API.views.desarrolladores %}" ><i class="icon-glass"></i> Developers API HCC</a></li>{% endif %}
+</ul>
+{% endblock %}
+{% block contenido %}
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th><h4>Usuario</h4></th>
+      <th><h4>staff</h4></th>
+      <th><h4>activo</h4></th>
+      <th><h4>SuperUsuario</h4></th>
+      <th><h4>LastLogin</h4></th>
+      <th><h4>Creacion</h4></th>
+      <th></th>
+    </Tr>
+  </Thead>
+  <tbody>
+  	{% for usuario in usuarios %}
+  	<tr id="{{usuario.id}}">
+		 <td>{{usuario.username}}</td>
+		 <!--<td>{{usuario.first_name}}</td>
+     <td>{{usuario.last_name}}</td>
+     <td>{{usuario.email}}</td>-->
+     <td>
+      {% if usuario.is_staff %}
+      <img src="{{ STATIC_URL }}base/img/check-mark-3-24.ico">
+      {% else %}
+      <img src="{{ STATIC_URL }}base/img/x-mark-24.ico">
+      {% endif %}
+      </td> 
+     <td>
+      {% if usuario.is_active %}
+      <img src="{{ STATIC_URL }}base/img/check-mark-3-24.ico">
+      {% else %}
+      <img src="{{ STATIC_URL }}base/img/x-mark-24.ico">
+      {% endif %}
+      </td>
+     <td>
+      {% if usuario.is_superuser %}
+      <img src="{{ STATIC_URL }}base/img/check-mark-3-24.ico">
+      {% else %}
+      <img src="{{ STATIC_URL }}base/img/x-mark-24.ico">
+      {% endif %}
+      </td>
+     <td>{{usuario.last_login}}</td>
+     <td>{{usuario.date_joined}}</td>
+     <td><a href="#" title="Mostrar Detalles" onclick="javascript:ajax.mostrar();">
+     <img src="{{ STATIC_URL }}base/img/fullscreen-8-32.ico" /></a>
+     <div id="detalles" style="display:none;">{{usuario.get_all_permissions}}{{usuario.get_full_name}}<br>{{usuario.email}}asdasd</div>
+      </td>
+     <!--<td>{{usuario.get_all_permissions}}</td>-->
+     <td>
+
+      
+       {% if perms.Usuarios %}
+          {% if perms.Usuarios.change_Perfil %}
+              <a href="{% url Usuarios.views.EditarPerfil usuario.id %}" class="btn">Editar</a></td><td>
+          {% endif %}
+          {% if perms.Usuarios.delete_Perfil %}
+              <a href="{% url Usuarios.views.eliminar usuario.id %}" class="btn btn-danger">Eliminar</a>
+          {% endif %}
+      {% else %}
+          <p>usted no tiene permiso para hacer algo en usuarios</p>
+      {% endif %}
+     </td>
+	</Tr>
+	{% empty %}
+		<tr><td colspan="4">no hay ningun usuario</td></tr>
+	{% endfor %}
+   
+  </Tbody>
+</Table>
+
+
+{% if perms.auth %}
+    {% if perms.auth.add_user %}
+        <a href="{% url Usuarios.views.NuevoUsuario %}" class="btn btn-primary">Agregar Usuario</a>
+    {% endif %}
+{% else %}
+ <p>no tiene permiso para agregar usuarios</p>
+{% endif %}
+
+{% endblock contenido %}
+{% block piePagina %}
+<script src="{{ STATIC_URL }}usuarios/js/main.js"></script>
+{% endblock piePagina %}

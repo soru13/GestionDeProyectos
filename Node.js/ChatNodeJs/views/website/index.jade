@@ -1,0 +1,113 @@
+extends layout
+
+block content
+    .chat
+        .chatbox: form.chatform#chatform
+            input(type="text", placeholder="Participa en el chat", maxlength="128").field
+
+            if user
+                p.publish
+                    case user.red
+                        when 'twitter'
+                            span Publicar a twitter
+                        when 'facebook'
+                            span Publicar a facebook
+                        default
+                            span Publicar 
+
+                    if user.admin
+                        input(type="checkbox")#publish
+                    else
+                        input(type="checkbox", checked)#publish
+
+        if user
+            nav#user-nav
+                a(href="#", title="Menciones").icon-mention#mention-btn
+                a(href="#", title="Sonido").icon-volume-high#sound-btn
+
+        .messages#messages
+            each message in messages
+                div(class="message#{ message.user.admin ? ' destacado' : ''}#{ user && user.username == message.user.username ? ' sameuser' : ''}", id="message-#{message._id}")
+                    .avatar: a(href=message.user.link, target="_blank")
+                        img(src=message.user.avatar, alt=message.user.username, width=30, height=30)
+
+                    a(href=message.user.link, target="_blank", title="Ir al perfil del usuario").user= message.user.username
+
+                    p.content!= message.get_content(user)
+
+                    .time: small= message.datetime.toString('MMMM d, HH:mm')
+
+                    .actions
+                        if user 
+                            if user.username != message.user.username
+                                a(href="#", target="_blank").icon-undo.responder
+                                
+                            if user.admin
+                                a(href="#", target="_blank", data-borrar=message.id).borrar.icon-blocked
+
+        .messages#mentions
+            each mention in mentions
+                div(class="message#{ mention.user.admin ? ' destacado' : ''}#{ user && user.username == mention.user.username ? ' sameuser' : ''}")
+                    .avatar: a(href=mention.user.link, target="_blank")
+                        img(src=mention.user.avatar, alt=mention.user.username, width=30, height=30)
+
+                    a(href=mention.user.link, target="_blank", title="Ir al perfil del usuario").user= mention.user.username
+
+                    p.content!= mention.get_content(user)
+
+                    .time: small= mention.datetime.toString('MMMM d, HH:mm')
+
+                    .actions
+                        a(href="#", target="_blank").icon-undo.responder
+    footer
+        a(href="https://github.com/dual3nigma/Mejorando.la-Chat", target="_blank", title="En Github").icon-github
+        if user
+            if user.admin
+                a(href="/admin", target="_blank", title="Estadísticas").icon-stats
+            a(href="/salir", title="Salir").icon-exit
+
+    if !user
+        .dialog#login
+            .overlay.animated
+            .panel.animated
+                p Para participar necesitas identificarte
+
+                a(href="/auth/facebook").facebook Conectate con
+                a(href="/auth/twitter").twitter Conectate con
+
+    if user
+        .dialog#encuesta
+            .overlay.animated
+            .panel.animated
+                form(action="/feedback", method="POST")
+                    .question 
+                        input(type="hidden", name="question[0][content]", value="¿Te gustó el programa?")
+                        p ¿Te gustó el programa?
+
+                        p
+                            span
+                                label Si 
+                                input(type="radio", name="question[0][answer]", value="1", checked)
+
+                            span
+                                label No
+                                input(type="radio", name="question[0][answer]", value="0")
+                    .questions
+
+                    .comment
+                        textarea(placeholder="¿Tienes algún comentario del programa de hoy?", name="comment").field
+
+                    .public
+                        p
+                            input(type="checkbox", name="public", value="1", checked)
+                            | hacer público mi comentario en el archivo de videos
+
+                    .enviar
+                        button(type="submit") Continuar »
+
+    if user
+        script
+            window.user = {
+                username: "#{ user.username }",
+                upgraded: #{ user.admin }
+            };

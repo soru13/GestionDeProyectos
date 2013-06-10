@@ -1,0 +1,32 @@
+{
+  "name": "HCC-chat",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "express": "3.0.4",
+    "jade": "*",
+    "connect": "2.7.1",
+    "connect-mongo": "0.2.0",
+    "cookie": "0.0.5",
+    "consolidate": "0.5.0",
+    "datejs": "0.0.2",
+    "mongoose": "3.5.0",
+    "passport": "0.1.15",
+    "connect-flash": "~0.1.0",
+    "passport-local": ">= 0.0.0",
+    "passport-facebook": "0.1.4",
+    "passport-twitter": "0.1.4",
+    "socket.io": "0.9.11",
+    "express-mongoose": "0.1.0 ",
+    "request": "2.12.0",
+    "raven": "0.4.5",
+    "socket.io": "0.9.11",
+    "toobusy": "0.2.2"
+  }, 
+  "devDependencies": {
+    "mocha": "*"
+  }
+}

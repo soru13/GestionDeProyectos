@@ -1,0 +1,133 @@
+{% extends 'base_form.html' %}
+{% block titulo %}Nueva Notificacion{% endblock titulo %}
+{% block head %}
+<style type="text/css">
+#id_Mensaje{
+  width: 100%;
+}
+.emoticon {
+  display: inline-block;
+  width:21px;
+  height:19px;
+  top:4px;
+  position: relative;
+  background:url({{ STATIC_URL }}base/img/emoticons.png) left top no-repeat;
+}
+.emoticon[title=":)"] {
+  background-position: left top;
+}
+.emoticon[title=":8"] {
+  background-position: -23px top;
+}
+.emoticon[title=":D"] {
+  background-position: -46px top;
+}
+.emoticon[title=":("] {
+  background-position: -87px top;
+}
+.emoticon[title=":O"] {
+  background-position: -243px top;
+}
+.emoticon[title=":P"] {
+  background-position: -286px top;
+}
+.emoticon[title=":cool:"] {
+  background-position: -329px top;
+}
+.emoticon[title=":'("] {
+  background-position: -438px top;
+}
+.emoticon[title=":|"] {
+  background-position: -458px top;
+}
+</style>
+{% endblock head %}
+
+
+{% block encabezado %}
+               <div class="navbar navbar-fixed-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                      </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-cog"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div><br><br><br>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">Notificar Mensaja</li>
+  <li><a href="{% url statistics.views.statistics %}"><i class="icon-signal"></i> Estadisticas</a></li>
+  <li><a href="{% url Apps.views.Appsprivada %}" ><i class="icon-star"></i> Aplicaciones</a></li>
+  <li ><a href="{% url ControlActividades.views.ControlActividades %}" ><i class="icon-list-alt"></i> Control Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" ><i class="icon-print"></i> Reporteria</a></li>
+  <li class="active"><a href="{% url Chat.views.Chat %}" ><i class="icon-envelope"></i> Mensajeria</a></li>
+  {% if login.is_staff %}<li><a href="{% url Usuarios.views.usuarios %}" ><i class="icon-user"></i> Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li><a href="{% url API.views.desarrolladores %}" ><i class="icon-glass"></i> Developers API HCC</a></li>{% endif %}
+</ul>
+{% endblock %}
+
+{% block contenido %} 
+<section id="miChat">
+      <div id="chat" style="height:200px;overflow: auto;">
+        <div id="chatInsite"/>
+
+         {% for mensaje in inbox %}
+
+         <p><article>
+          <figure class="usuarioIMG" >
+                  <img src="{{ MEDIA_URL }}{{mensaje.avatar.avatar}}" />
+                  <figcaption>
+                  </figcaption>
+            </figure>
+
+
+
+            
+          <span>  {{mensaje.Envio}} :</span>{{mensaje.Mensaje|safe}}</article></p>
+
+         {% empty %}
+      
+        {% endfor %}
+      </div>
+</section>
+<span id="perfilid" style="display:none;">{{perfilUer.id}}</span>
+<span id="id" style="display:none;">{{Actividad.id}}</span>
+<span id="User" style="display:none;">{{Actividad.Usuario.id}}</span>
+<span id="UserLoginId" style="display:none;">{{login.id}}</span>
+<span id="ACt">{{Actividad}}</span>
+<div id="emoticon"><span title=":)" class="emoticon"/></li></div>
+{% endblock contenido %}
+{% block valor %}AgregarMensaje{% endblock valor %}
+{% block piePagina %}
+
+<script src="{{ STATIC_URL }}Chat/js/main.js"></script>
+{% endblock piePagina %}

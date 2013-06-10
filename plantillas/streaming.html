@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% comment %}Aqui van los comentarios{% endcomment %}
+{% block titulo %}Streaming | live {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}streaming/css/main.css">
+<script src="http://10.17.1.200:3000/socket.io/socket.io.js"></script>
+<script src="{{ STATIC_URL }}streaming/js/AC_RunActiveContent.js" language="javascript"></script>{% endblock %}
+{% block encabezado %}<H1>Streaming | live </H1>{% endblock %}
+{% block contenido %}
+<section id="streaming"></section>
+<section id="chatlive">
+	<div id="ingresaNombre">
+		<div id="setNombre" class="pantalla">
+			<form id="formNombre" class="form">
+				<label for="name">Nick Nombre:</label>
+				<input type="text" name="name" id="name" placeholder="Set your nickname"/>
+				<input type="submit" value="Enviar" id="setNick" class="btnLogIn"/>
+			</form>
+		</div>
+	</div>
+	<div id="contChat">
+		<form id="formMsg">
+			<input type="text" name="msg" style="width:64%;" id="msg" required=""/>
+			<input type="submit" value="Enviar" id="sendM" class="btnLogIn"/>
+			<button id="btnClosSes" class="btnLogIn">Cerrar Sesión</button>
+		</form>
+		<div id="miChat">
+			<div id="chat">
+				<div id="chatInsite"/>
+			</div>
+		</div>
+	</div>
+</section>
+<div id="usuariosCon">
+		<header>
+			<h2>Usuarios Conectados</h2>
+		</header>
+		<div id="users">
+		</div>
+	</div>
+{% endblock %}
+{% block piePagina %}{% endblock %}

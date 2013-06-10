@@ -1,0 +1,112 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install', '-g' ]
+2 info using npm@1.1.45
+3 info using node@v0.8.4
+4 verbose config file /home/jesus/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose read json /usr/local/lib/package.json
+8 verbose read json /usr/local/lib/package.json
+9 verbose cache add [ '.', null ]
+10 silly cache add name=undefined spec="." args=[".",null]
+11 verbose parsed url { pathname: '.', path: '.', href: '.' }
+12 silly lockFile 3a52ce78- .
+13 verbose lock . /home/jesus/.npm/3a52ce78-.lock
+14 verbose read json package.json
+15 warn package.json Chat@0.0.1-4 No README.md file found!
+16 verbose tar pack [ '/home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/tmp.tgz',
+16 verbose tar pack   '.' ]
+17 verbose tarball /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/tmp.tgz
+18 verbose folder .
+19 info prepublish Chat@0.0.1-4
+20 silly lockFile 70ea8b0b-190170-0-740627521649003-tmp-tgz /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/tmp.tgz
+21 verbose lock /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/tmp.tgz /home/jesus/.npm/70ea8b0b-190170-0-740627521649003-tmp-tgz.lock
+22 silly lockFile 70ea8b0b-190170-0-740627521649003-tmp-tgz /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/tmp.tgz
+23 verbose tar unpack /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/tmp.tgz
+24 silly lockFile 685f55d9-190170-0-740627521649003-package /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package
+25 verbose lock /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package /home/jesus/.npm/685f55d9-190170-0-740627521649003-package.lock
+26 silly gunzTarPerm modes [ '755', '644' ]
+27 silly gunzTarPerm extractEntry package.json
+28 silly gunzTarPerm modified mode [ 'package.json', 436, 420 ]
+29 silly gunzTarPerm extractEntry server.js
+30 silly gunzTarPerm modified mode [ 'server.js', 436, 420 ]
+31 verbose read json /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package/package.json
+32 silly lockFile 685f55d9-190170-0-740627521649003-package /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package
+33 verbose from cache /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package/package.json
+34 verbose tar pack [ '/home/jesus/.npm/Chat/0.0.1-4/package.tgz',
+34 verbose tar pack   '/home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package' ]
+35 verbose tarball /home/jesus/.npm/Chat/0.0.1-4/package.tgz
+36 verbose folder /home/jesus/tmp/npm-2608/1359394190170-0.740627521649003/package
+37 silly lockFile 5bdbcfd6-sus-npm-Chat-0-0-1-4-package-tgz /home/jesus/.npm/Chat/0.0.1-4/package.tgz
+38 verbose lock /home/jesus/.npm/Chat/0.0.1-4/package.tgz /home/jesus/.npm/5bdbcfd6-sus-npm-Chat-0-0-1-4-package-tgz.lock
+39 silly lockFile 5bdbcfd6-sus-npm-Chat-0-0-1-4-package-tgz /home/jesus/.npm/Chat/0.0.1-4/package.tgz
+40 silly lockFile 015c0ca3-e-jesus-npm-Chat-0-0-1-4-package /home/jesus/.npm/Chat/0.0.1-4/package
+41 verbose lock /home/jesus/.npm/Chat/0.0.1-4/package /home/jesus/.npm/015c0ca3-e-jesus-npm-Chat-0-0-1-4-package.lock
+42 silly lockFile 015c0ca3-e-jesus-npm-Chat-0-0-1-4-package /home/jesus/.npm/Chat/0.0.1-4/package
+43 verbose tar unpack /home/jesus/.npm/Chat/0.0.1-4/package.tgz
+44 silly lockFile 015c0ca3-e-jesus-npm-Chat-0-0-1-4-package /home/jesus/.npm/Chat/0.0.1-4/package
+45 verbose lock /home/jesus/.npm/Chat/0.0.1-4/package /home/jesus/.npm/015c0ca3-e-jesus-npm-Chat-0-0-1-4-package.lock
+46 silly gunzTarPerm modes [ '755', '644' ]
+47 silly gunzTarPerm extractEntry package.json
+48 silly gunzTarPerm extractEntry server.js
+49 verbose read json /home/jesus/.npm/Chat/0.0.1-4/package/package.json
+50 silly lockFile 015c0ca3-e-jesus-npm-Chat-0-0-1-4-package /home/jesus/.npm/Chat/0.0.1-4/package
+51 silly shasum updated bytes 1000
+52 info shasum e49d213f76dbc8a057b7ea636c3d1e3cdf9dbfb7
+52 info shasum /home/jesus/.npm/Chat/0.0.1-4/package.tgz
+53 verbose from cache /home/jesus/.npm/Chat/0.0.1-4/package/package.json
+54 verbose chmod /home/jesus/.npm/Chat/0.0.1-4/package.tgz 644
+55 verbose chown /home/jesus/.npm/Chat/0.0.1-4/package.tgz [ 1000, 1000 ]
+56 silly lockFile 3a52ce78- .
+57 silly resolved [ { version: '0.0.1-4',
+57 silly resolved     dependencies:
+57 silly resolved      { express: '3.0.4',
+57 silly resolved        jade: '0.27.7',
+57 silly resolved        consolidate: '0.5.0',
+57 silly resolved        'socket.io': '0.9.11' },
+57 silly resolved     subdomain: 'jesus.curso-mejorandola',
+57 silly resolved     scripts: { start: 'server.js' },
+57 silly resolved     engines: { node: '0.8.14' },
+57 silly resolved     name: 'Chat',
+57 silly resolved     _id: 'Chat@0.0.1-4',
+57 silly resolved     dist: { shasum: 'e49d213f76dbc8a057b7ea636c3d1e3cdf9dbfb7' },
+57 silly resolved     _from: '.' } ]
+58 info install Chat@0.0.1-4 into /usr/local/lib
+59 info installOne Chat@0.0.1-4
+60 warn engine Chat@0.0.1-4: wanted: {"node":"0.8.14"} (current: {"node":"0.8.4","npm":"1.1.45"})
+61 verbose from cache /home/jesus/.npm/Chat/0.0.1-4/package/package.json
+62 info /usr/local/lib/node_modules/Chat unbuild
+63 verbose read json /usr/local/lib/node_modules/Chat/package.json
+64 verbose tar unpack /home/jesus/.npm/Chat/0.0.1-4/package.tgz
+65 silly lockFile 71c98a35-usr-local-lib-node-modules-Chat /usr/local/lib/node_modules/Chat
+66 verbose lock /usr/local/lib/node_modules/Chat /home/jesus/.npm/71c98a35-usr-local-lib-node-modules-Chat.lock
+67 silly gunzTarPerm modes [ '755', '644' ]
+68 error Error: EACCES, mkdir '/usr/local/lib/node_modules/Chat'
+68 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/Chat']
+68 error   errno: 3,
+68 error   code: 'EACCES',
+68 error   path: '/usr/local/lib/node_modules/Chat',
+68 error   fstream_type: 'Directory',
+68 error   fstream_path: '/usr/local/lib/node_modules/Chat',
+68 error   fstream_class: 'DirWriter',
+68 error   fstream_stack:
+68 error    [ 'DirWriter._create (/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23)',
+68 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:51:17',
+68 error      'Object.oncomplete (fs.js:297:15)' ] }
+69 error Please try running this command again as root/Administrator.
+70 error System Linux 3.2.0-36-generic-pae
+71 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g"
+72 error cwd /home/jesus/HCC/streaming/chat
+73 error node -v v0.8.4
+74 error npm -v 1.1.45
+75 error path /usr/local/lib/node_modules/Chat
+76 error fstream_path /usr/local/lib/node_modules/Chat
+77 error fstream_type Directory
+78 error fstream_class DirWriter
+79 error code EACCES
+80 error errno 3
+81 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/Chat'
+82 error fstream_stack DirWriter._create (/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23)
+82 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:51:17
+82 error fstream_stack Object.oncomplete (fs.js:297:15)
+83 verbose exit [ 3, true ]

@@ -1,0 +1,146 @@
+<html>
+<head>
+  <title>Gestion de Actividades</title>
+  <link rel="stylesheet" href="{{ STATIC_URL }}base/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}base/css/bootstrap-responsive.min.css">
+  <style type="text/css">
+figure{
+  margin: 0px;
+  padding: 0px;
+  top: 0px;
+  bottom: 0px;
+  
+}
+#fechaactual,#logo{
+  width: 12.5%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: right;
+}
+.encabezado{
+    width: 80%;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: 0px;
+}
+
+#logo {
+  width: 70px;
+  height: 70px;
+}
+
+span ,time{
+  font-size: 12px;
+}
+table td{
+  margin: 0px;
+  padding: 0px;
+}
+table tr{
+  margin: 0px;
+  padding: 0px;
+}
+h3{
+  margin: 0px;
+  padding: 0px;
+}
+.progress{
+  margin-bottom:0px;
+}
+
+@media all {
+   div.saltopagina{
+      display: none;
+   }
+}
+@media print{
+  #fechaactual{
+    position: relative;
+    top: 10px;
+
+}
+span ,time{
+  font-size: 8px;
+}
+table td{
+  font-size: 8px;
+  margin: 0px;
+  padding: 0px;
+}
+.encabezado{
+    width: 75%;
+
+}
+  h3{
+    margin: 0px;
+    padding: 0px;
+  }
+  div.saltopagina{ 
+    display:block; 
+    page-break-before:always;
+  }
+}
+</style>
+</head>
+<body>
+<figure id="logo" >
+      <img src="{{ STATIC_URL }}base/img/logo2.png" />
+      <figcaption>
+      </figcaption>
+</figure>
+<CENTER class="encabezado"><h3>HOSPITAL CIVIL DE CULIACAN</h3>
+<span>AV. ALVARO OBREGON 1422 NTE. ESQ. CON MARIANO ABASOLO COL. TIERRA BLANCA</span>
+  <BR>
+  <SPAN>CULIACAN, SIN. TEL. 7-26-46-50 RFC: HCC9002221P8</SPAN>
+</CENTER><time id="fechaactual" class=""  datetime="{{FechaActual}}">{{FechaActual|date:'SHORT_DATETIME_FORMAT'}}</time>
+
+<b>Personal: </b>  {{Personal.get_full_name}}
+
+<table class="table table-condensed" id="tabla">
+  <thead>
+    <tr>
+      <th><h5>Proyecto</h5></th>
+      <th><h5>Actividad</h5></th>
+      <th><h5>Inicia</h5></th>
+      <th><h5>Termina</h5></th>
+      <th><h5>Estatus</h5></th>
+      <th><h5>Porcentaje</h5></th>
+    </Tr>
+  </Thead>
+  <tbody>   
+    {% for actividad in Actividades %}
+    <tr id="{{actividad.id}}">
+     <td>{{actividad.Proyecto}}</td>
+     <td>{{actividad.Actividad}}</td>
+     <td>{{actividad.Desde|date:'SHORT_DATE_FORMAT'}} </td>
+     <td>{{actividad.Hasta|date:'SHORT_DATE_FORMAT'}} </td>
+     <td>
+       {% if actividad.Estatus %}
+      <img src="{{ STATIC_URL }}base/img/check-mark-3-24.ico">
+      {% else %}
+      <img src="{{ STATIC_URL }}base/img/x-mark-24.ico">
+      {% endif %}
+     </td>
+    <td>
+        {% for last in porcentaje %}
+          {% if last.Actividad == actividad %}
+            <div class="progress progress-striped active">
+              <div class="bar" style="width: {{last.Points}}%;">{{last.Points}}%</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+    </td>
+      
+  </Tr>
+  {% empty %}
+    <tr><td colspan="4">no hay ninguna Actividad</td></tr>
+  {% endfor %}
+    
+  </Tbody>
+</Table>
+<footer>
+
+</footer>
+ </body>
+</html>

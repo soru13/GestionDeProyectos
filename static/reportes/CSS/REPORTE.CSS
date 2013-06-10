@@ -1,0 +1,39 @@
+<style type="text/css">
+#encabezado{
+
+}
+#fechaactual{
+  position: relative;
+  float: right;
+}
+#logo{
+  position: absolute;
+  width: 70px;
+  height: 70px;
+}
+span{
+  font-size: 12px;
+}
+#pie{ 
+background-color: #cccccc; 
+padding: 3 10 3 10px; 
+text-align:right; 
+clear: both; 
+} 
+@media all {
+   div.saltopagina{
+      display: none;
+   }
+}
+@media print{
+  #logo{
+    position: absolute;
+    left: -40px;
+    top: 20px;
+  }
+  div.saltopagina{ 
+      display:block; 
+      page-break-before:always;
+   }
+}
+</style>

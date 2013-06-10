@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% comment %}Aqui van los comentarios{% endcomment %}
+{% block titulo %}Apps{% endblock titulo %}
+{% block head %}
+{% endblock head %}
+{% block encabezado %}
+               <div class="navbar navbar-fixed-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                      </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-refresh"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div><br><br><br>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">APPs</li>
+  <li ><a href="{% url statistics.views.statistics %}"><i class="icon-signal"></i> Estadisticas</a></li>
+  <li class="active"><a href="{% url Apps.views.Appsprivada %}" ><i class="icon-star"></i> Aplicaciones</a></li>
+  <li ><a href="{% url ControlActividades.views.ControlActividades %}" ><i class="icon-list-alt"></i> Control Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" ><i class="icon-print"></i> Reporteria</a></li>
+  <li ><a href="{% url Chat.views.Chat %}" ><i class="icon-envelope"></i> Mensajeria</a></li>
+  {% if login.is_staff %}<li><a href="{% url Usuarios.views.usuarios %}" ><i class="icon-user"></i> Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li><a href="{% url API.views.desarrolladores %}" ><i class="icon-glass"></i> Developers API HCC</a></li>{% endif %}
+</ul>
+{% endblock %}
+{% block contenido %}
+
+<div class="hero-unit">
+	<h3>Descarga aqui la aplicación ANDROID:</h3>
+	<a href="{{ STATIC_URL }}Apps/HCC.apk">Aplicación HCC</a><br>
+</div>
+<div class="row-fluid">
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th><h3>Desarrollador</h3></th>
+      <th><h3>Titulo</h3></th>
+      <th><h3>Descripción</h3></th>
+      <th><h3>Download</h3></th>
+      <th><h3>View</h3></th>
+    </Tr>
+  </Thead>
+  <tbody>
+  	{% for Aplicacion in Apps %}
+  	<tr>
+		 <td>{{Aplicacion.desarrolador}}</td>
+		 <td>{{Aplicacion.titulo}}</td>
+		 <td>{{Aplicacion.descripcion}}</td>
+     <td><a href="{{ MEDIA_URL }}{{ Aplicacion.App }}" class="icon-download-alt"></a></td>
+     <td><a href="" class="icon-eye-open"></a></td>
+		 <td><a href="#" class="btn">Editar</a> <a href="#" class="btn btn-danger">Eliminar</a></td>
+	</Tr>
+	{% empty %}
+		<tr><td colspan="4">no hay ninguna aplicacion</td></tr>
+	{% endfor %}
+   
+  </Tbody>
+</Table>
+repositorio en github:
+<a href="https://github.com/soru13/HccMobil">Repositorio Android HCC</a>
+<br>
+
+<a href="{% url Apps.views.AgregarAplicacion %}" class="btn btn-primary">Agragar Aplicacion</a>
+
+
+
+{% endblock contenido %}
+{% block piePagina %}
+<script src="{{ STATIC_URL }}Apps/js/main.js"></script>
+{% endblock piePagina %}

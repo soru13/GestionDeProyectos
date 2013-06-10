@@ -1,0 +1,6 @@
+{% extends 'usuarios/ingresar.html' %}
+{% block titulo %}No user{% endblock titulo %}
+{% block contenido %}
+<div class="hero-unit"><h1>error de acceso</h1></div>
+<p>el usuario y la contraseña no coinciden o no existen.</p><a href="{% url Usuarios.views.ingresar %}" class="btn btn-primary">Intentar otra vez</a>
+{% endblock %}

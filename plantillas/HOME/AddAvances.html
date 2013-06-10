@@ -1,0 +1,113 @@
+{% extends 'base_form.html' %}
+{% comment %}Aqui van los comentarios{% endcomment %}
+{% block titulo %}Avances{% endblock titulo %}
+{% block head %}
+{% endblock head %}
+{% block encabezado %}
+               <div class="navbar navbar-fixed-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                       </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-refresh"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div><br><br><br>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">Agregar Avance</li>
+  <li><a href="{% url statistics.views.statistics %}"><i class="icon-signal"></i> Estadisticas</a></li>
+  <li><a href="{% url Apps.views.Appsprivada %}" ><i class="icon-star"></i> Aplicaciones</a></li>
+  <li class="active"><a href="{% url ControlActividades.views.ControlActividades %}" ><i class="icon-list-alt"></i> Control Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" ><i class="icon-print"></i> Reporteria</a></li>
+  <li><a href="{% url Chat.views.Chat %}" ><i class="icon-envelope"></i> Mensajeria</a></li>
+  {% if login.is_staff %}<li><a href="{% url Usuarios.views.usuarios %}" ><i class="icon-user"></i> Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li><a href="{% url API.views.desarrolladores %}" ><i class="icon-glass"></i> Developers API HCC</a></li>{% endif %}
+</ul>
+
+
+
+
+
+
+
+{% endblock %}
+{% block contenido %}
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th><h4>Avances</h4></th>
+      <th><h4>Fecha de Creación</h4></th>
+      <th><h4>Actividad</h4></th>
+      <th><h4>Estatus</h4></th>
+      <th><h4>Porcentaje</h4></th>
+    </Tr>
+  </Thead>
+  <tbody id="avance">
+ 
+    {% for actividad in Avance %}
+    <tr id="{{actividad.id}}">
+      <td>{{actividad.Avance|safe}}</td>
+     <td>{{actividad.Fecha}}</td>
+     <td>{{actividad.Actividad}}</td>
+      <td>
+        {% if actividad.Estatus %}
+      <img src="{{ STATIC_URL }}base/img/check-mark-3-24.ico">
+      {% else %}
+      <img src="{{ STATIC_URL }}base/img/x-mark-24.ico">
+      {% endif %}
+      </td>
+      <td>
+        <div class="progress progress-striped active">
+          <div class="bar" style="width: {{actividad.Points}}%;">{{actividad.Points}}%</div>
+        </div>
+      </td>
+  </Tr>
+  {% empty %}
+    <tr><td colspan="4">no hay ningun Avance</td></tr>
+  {% endfor %}
+    
+  </Tbody>
+</Table>
+<span id="actividad" style="display:none;">{{Activida.Actividad}}</span>
+<br>
+        <a href="#" class="btn btn-primary" name="{{id_Actividad}}" id="AgregarAvance">Agragar Avance</a>
+        <a href="{% url Home.views.Principal %}" class="btn btn-info"><img src="{{ STATIC_URL }}base/img/undo-4-24.ico">atras</a>
+
+
+
+{% endblock contenido %}
+{% block valor %}AgregarAvance{% endblock valor %}
+{% block piePagina %}
+
+
+<script src="{{ STATIC_URL }}GestionProyectos/js/main.js"></script>
+{% endblock piePagina %}

@@ -1,0 +1,15 @@
+extends layout
+
+block body
+    h2
+        span.icon-signup
+        | feedback
+
+    nav
+        each date in dates
+            a(href="/admin/feedback/#{date._id}")=date._id
+
+
+    h3 publicar encuesta 
+
+    button#publish ¡PUBLICAR AHORA!

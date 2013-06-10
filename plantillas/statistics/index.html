@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block titulo %}estadisticas{% endblock titulo %}
+{% block head %}
+<style type="text/css">#mimapa {
+  position: relative;
+  height: 350px;
+  top: 0;
+  width: 100%;
+}</style>
+{% endblock head %}
+
+{% block encabezado %}
+               <div class="navbar navbar-fixed-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                      </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-refresh"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div><br><br><br>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">Estadisticas</li>
+  <li class="active"><a href="{% url statistics.views.statistics %}"><i class="icon-signal"></i> Estadisticas</a></li>
+  <li><a href="{% url Apps.views.Appsprivada %}" ><i class="icon-star"></i> Aplicaciones</a></li>
+  <li ><a href="{% url ControlActividades.views.ControlActividades %}" ><i class="icon-list-alt"></i> Control Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" ><i class="icon-print"></i> Reporteria</a></li>
+  <li ><a href="{% url Chat.views.Chat %}" ><i class="icon-envelope"></i> Mensajeria</a></li>
+  {% if login.is_staff %}<li><a href="{% url Usuarios.views.usuarios %}" ><i class="icon-user"></i> Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li><a href="{% url API.views.desarrolladores %}" ><i class="icon-glass"></i> Developers API HCC</a></li>{% endif %}
+</ul>
+{% endblock %}
+{% block contenido %}
+<!--Load the AJAX API-->
+    <div id="usuarios_14_dias" style="display:inline-block;vertical-align: top;"></div>
+ <!--Div that will hold the pie chart-->
+    <div id="chart_div" style="display:inline-block;vertical-align: top;"></div>
+     <div id="mimapa"></div>
+{% endblock contenido %}
+{% block piePagina %}
+<script type="text/javascript" src="http://www.google.com/jsapi?key={{ GOOGLE_API_KEY }}"></script>
+<script type="text/javascript"><!--
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(function() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Día');
+        data.addColumn('number', 'Nuevas Actividades');
+        data.addRows({{ users_stats|length }});
+        {% for s in users_stats %}  
+            data.setValue({{ forloop.counter0 }}, 0, '{{ s.0|date:"d M" }}');
+            data.setValue({{ forloop.counter0 }}, 1, {{ s.1 }});
+        {% endfor %}
+
+        var chart = new google.visualization.LineChart(document.getElementById('usuarios_14_dias'));
+        chart.draw(data, {width: 620, height: 200, legend:'none'});
+    });
+//--></script>
+  
+ <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Actividades', {{actividades}}],
+          ['Proyectos', {{proyectos}}],
+          ['Cancelaciones', {{cancelaciones}}],
+        ]);
+
+        // Set chart options
+        var options = {'title':'GRAFICA DE PASTEL',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+   
+<script src="{{ STATIC_URL }}statistics/js/main.js"></script>
+{% endblock piePagina %}

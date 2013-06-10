@@ -1,0 +1,57 @@
+{% extends 'base_form.html' %}
+{% block titulo %}Nueva Actividad{% endblock titulo %}
+{% block encabezado %}
+<div class="navbar navbar-static-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                      </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-refresh"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">Nueva Actividad</li>
+  <li><a href="{% url statistics.views.statistics %}">Estadisticas</a></li>
+  <li><a href="{% url Apps.views.Appsprivada %}" >Aplicaciones</a></li>
+  <li class="active"><a href="{% url ControlActividades.views.ControlActividades %}" >Control De Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" >Reporteria</a></li>
+  <li><a href="{% url Chat.views.Chat %}" >Chat</a></li>
+  {% if login.is_staff %}<li ><a href="{% url Usuarios.views.usuarios %}" >Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li><a href="{% url API.views.desarrolladores %}" >Developers API HCC</a></li>{% endif %}
+</ul>
+{% endblock %}
+
+{% block valor %}AgregarAct{% endblock valor %}
+{% block piePagina %}
+<script src="{{ STATIC_URL }}GestionProyectos/js/main.js"></script>
+{% endblock piePagina %}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% comment %}Aqui van los comentarios{% endcomment %}
+{% block titulo %}API{% endblock titulo %}
+{% block head %}
+{% endblock head %}
+{% block encabezado %}
+               <div class="navbar navbar-fixed-top">
+                  <div class="navbar-inner">
+                    <a class="brand" href="{% url Home.views.Principal %}">Hospital Civil de Culiacan </a>
+                    <ul class="nav">
+                      <li>
+                        {% if numberRegister == 0 %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-5-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% else %}
+                        <a href="#" id="leido" role="button"  data-toggle="modal"><img src="{{ STATIC_URL }}base/img/inbox-51-24.ico">{{numberRegister}} Notificaciones</a>
+                        {% endif %}
+                      </li>
+                    </ul>
+                    <ul class="nav pull-right">
+                      <li class="picture">
+                        <figure  >
+                              <img src="{{ MEDIA_URL }}{{perfilUer.avatar}}" />
+                              <figcaption>
+                              </figcaption>
+                        </figure>
+                      </li><li><a href="" id="userlogin" title="{{login.id}}">{{login.username}}</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                           Configuración
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url Usuarios.views.EditarPerfilLogin %}" ><i class=" icon-user"></i> Editar Perfil</a></li>
+                          <li><a href="{% url Usuarios.views.resetPassword %}" ><i class="icon-refresh"></i> Reset Password</a></li>
+                          <li><a href="{% url Usuarios.views.cerrar %}" ><i class="icon-off"></i> Cerrar Session</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+
+                    <span>{% comment %}lastLogin{{login.last_login}}|MiembroDesde: {{login.date_joined}}{% endcomment %}</span>
+                  </div>
+                </div><br><br><br>
+{% endblock %}
+{% block MenuIzq %}
+<ul class="nav nav-list">
+  <li class="nav-header">Desarrolladores</li>
+  <li ><a href="{% url statistics.views.statistics %}"><i class="icon-signal"></i> Estadisticas</a></li>
+  <li ><a href="{% url Apps.views.Appsprivada %}" ><i class="icon-star"></i> Aplicaciones</a></li>
+  <li ><a href="{% url ControlActividades.views.ControlActividades %}" ><i class="icon-list-alt"></i> Control Actividades</a></li>
+  <li><a href="{% url Reporteria.views.Reporteria %}" ><i class="icon-print"></i> Reporteria</a></li>
+  <li ><a href="{% url Chat.views.Chat %}" ><i class="icon-envelope"></i> Mensajeria</a></li>
+  {% if login.is_staff %}<li ><a href="{% url Usuarios.views.usuarios %}" ><i class="icon-user"></i> Usuarios</a></li>{% endif %}
+  {% if login.is_staff %}<li class="active"><a href="{% url API.views.desarrolladores %}" ><i class="icon-glass"></i> Developers API HCC</a></li>{% endif %}
+</ul>
+{% endblock %}
+{% block contenido %}
+<dl class="dl-horizontal">
+  <dt>Api RestFull</dt>
+  <dd>...</dd>
+  <dt>Todos los usuarios</dt>
+  <dd><a href="http://10.17.1.200:8000/api/v1/user/?format=json">te muestra todos los usuarios </a></dd>
+  <dt>Especifico usuario</dt>
+  <dd><a href="http://10.17.1.200:8000/api/v1/user/3/?format=json">Especifico usuario</a></dd>
+  <dt>Esquema</dt>
+  <dd><a href="http://10.17.1.200:8000/api/v1/user/schema/?format=json">Muestro un Esquema de Todo los metos y todo lo que hay</a></dd>
+  <dt>Rango</dt>
+  <dd><a href="http://127.0.0.1:8000/api/v1/user/set/1;3/?format=json">Muetro por rango </a></dd>
+  <dt>Disponibilidad</dt>
+  <dd><a href="http://127.0.0.1:8000/api/v1/user/set/1;3/?format=json">Muestro la Disponibilidad</a></dd>
+  <hr>
+  <dt>Insertar datos ala API</dt>
+  <dd>
+    <pre>
+      var data = JSON.stringify({
+              "Descripcion": "Another Post",
+              "user": "/api/v1/user/1/"
+            });
+
+      $.ajax({
+        url: 'http://10.17.1.200:8000/api/v1/entry/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: data,
+        dataType: 'json',
+        processData: false
+      })
+      /*----------------Con CURL(consola) yabiene por defual en linux y mac-------------------*/
+      curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"Descripcion": "Another Post"}' http://10.17.1.200:8000/api/v1/entry/
+
+      /*---------------return Exito al Crear---------------------------*/
+      HTTP/1.0 201 CREATED
+      Date: Fri, 20 May 2011 06:48:36 GMT
+      Server: WSGIServer/0.1 Python/2.7
+      Content-Type: text/html; charset=utf-8
+      Location: http://localhost:8000/api/v1/entry/4/
+    </pre>
+  </dd>
+  <dt>Actualizar datos existentes API</dt>
+  <dd>
+    <pre>
+       var data = JSON.stringify({
+              "Descripcion": "Another Post",
+              "user": "/api/v1/user/1/"
+            });
+
+      $.ajax({
+        url: 'http://10.17.1.200:8000/api/v1/entry/4',
+        type: 'PUT',
+        contentType: 'application/json',
+        data: data,
+        dataType: 'json',
+        processData: false
+      })
+      /*----------------Con CURL(consola) yabiene por defual en linux y mac-------------------*/
+      curl --dump-header - -H "Content-Type: application/json" -X PUT --data '{"Descripcion": "Another Post", "user": "/api/v1/user/1/"}' http://10.17.1.200:8000/api/v1/entry/4/
+
+      /*----------------return exito al actualizar---------------------------*/
+      HTTP/1.0 204 No Content 
+      Fecha: Fri, 20 May 2011 07:13:21 GMT 
+      Server: WSGIServer/0.1 Python/2.7 
+      Content-Length: 0 
+      Content-Type: text / html; charset = UTF-8
+    </pre>
+  </dd>
+</dl>
+</div>
+
+
+
+
+{% endblock contenido %}
+{% block piePagina %}
+<script src="{{ STATIC_URL }}API/js/index.js"></script>
+{% endblock piePagina %}
