@@ -30,7 +30,8 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^CFDI$', 'API.views.CFDI', name='CFDI'),
     url(r'^Developers$', 'API.views.desarrolladores', name='desarrolladores'),
-    
+    url(r'^hello_world/', 'apiSOAP.views.hello_world_service'),
+    url(r'^hello_world/service.wsdl', 'apiSOAP.views.hello_world_service'),
 
     url(r'^Usuarios$', 'Usuarios.views.usuarios', name='usuarios'),
     url(r'^NuevoUsuario$', 'Usuarios.views.NuevoUsuario', name='NuevoUsuario'),

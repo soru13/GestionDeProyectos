@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'Home',
     'Reporteria',
     'Chat',
+    'apiSOAP',
 )
 
 # A sample logging configuration. The only tangible logging
